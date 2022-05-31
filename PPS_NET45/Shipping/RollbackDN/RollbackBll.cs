@@ -293,5 +293,20 @@ namespace RollbackDN
             }
             return lstGlbMSN;
         }
+
+        public string CheckShipmentcancel(string shipmentid, string SMtype)
+        {
+
+            string errmsg = string.Empty;
+            RollbackDal rbdn = new RollbackDal();
+            string strRB = rbdn.CheckShipmentcancelByProcedure(shipmentid, SMtype, out errmsg);
+
+            if (strRB.Contains("NG"))
+            {
+                LibHelper.MediasHelper.PlaySoundAsyncByHold();
+                return errmsg;
+            }
+            return "OK";
+        }
     }
 }

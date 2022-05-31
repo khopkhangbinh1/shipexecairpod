@@ -125,15 +125,17 @@ namespace RollbackDN
 
             string checkUPSshipment = string.Empty;
             string sendUPSCancel = string.Empty;
+            string checkshipmentcancel = string.Empty;
             //string checkEnable = "";
             CheckUPS_shipment chk = new CheckUPS_shipment();
             checkUPSshipment = chk.UPSCheck(strSID);
+            checkshipmentcancel = pb.CheckShipmentcancel(strSID, "CANCEL");
 
             string strResult = string.Empty;
             string strResulterrmsg = string.Empty;
             string upsMSG = string.Empty;
 
-            if (checkUPSshipment.Equals("OK"))
+            if (checkUPSshipment.Equals("OK") && checkshipmentcancel.Equals("OK"))
             {
                 if (chk.CheckUPSEnable())
                 {

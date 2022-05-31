@@ -514,5 +514,24 @@ namespace RollbackDN
             return ClientUtils.ExecuteSQL(sql, para).Tables[0];
         }
 
+        public string CheckShipmentcancelByProcedure(string shipmentId, string SMType, out string RetMsg)
+        {
+            object[][] procParams = new object[3][];
+            procParams[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "InputSno", shipmentId };
+            procParams[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "TYPE", SMType };
+            procParams[2] = new object[] { ParameterDirection.Output, OracleDbType.Varchar2, "RetMsg", "" };
+            DataSet ds = ClientUtils.ExecuteProc("PPSUSER.SP_CHECK_ROLLBACKSHIPMENTID", procParams);
+            RetMsg = ds.Tables[0].Rows[0]["RetMsg"].ToString();
+            if (RetMsg.Equals("OK"))
+            {
+                return "OK";
+            }
+            else
+            {
+                return RetMsg;
+            }
+
+        }
+
     }
 }
