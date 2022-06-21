@@ -35,10 +35,7 @@ namespace CarrierWCF.Data
         public void WriteLog(string Origin_data, string interfaceName, bool boolRes, string strRes, string owner, string action_name, string IN_GUID, string carton_id = "")
         {
             dbparam = new DBParameter();
-            string sql = @"insert into ppsuser.i_interface_log 
-                                (Origin_data,interface_name,status,create_date,owner,action_name,CARTON_ID,IN_GUID)
-                                 values
-                                 (:Origin_data,:interface_name,:status,sysdate,:owner,:action_name,:CARTON_ID,:IN_GUID)";
+            string sql = "";
 
             if (strRes != "")
             {
@@ -46,6 +43,14 @@ namespace CarrierWCF.Data
                                 (Origin_data,interface_name,status,result_message,create_date,owner,action_name,CARTON_ID,IN_GUID)
                                  values
                                  (:Origin_data,:interface_name,:status,:result_message,sysdate,:owner,:action_name,:CARTON_ID,:IN_GUID)";
+                dbparam.Add("result_message", OracleType.Clob, strRes);
+            }
+            else
+            {
+                sql = @"insert into ppsuser.i_interface_log 
+                                (Origin_data,interface_name,status,create_date,owner,action_name,CARTON_ID,IN_GUID)
+                                 values
+                                 (:Origin_data,:interface_name,:status,sysdate,:owner,:action_name,:CARTON_ID,:IN_GUID)";
                 dbparam.Add("result_message", OracleType.Clob, null);
             }
             dbparam.Add("Origin_data", OracleType.Clob, Origin_data);

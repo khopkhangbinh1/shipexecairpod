@@ -185,5 +185,14 @@ namespace RollbackDN.UPSCancel
             }
             return data;
         }
+
+        public bool CheckUPSCancelFlag()
+        {
+            //string msg = "";
+            string sql = @"select ENABLED from PPSUSER.T_BASICPARAMETER_INFO where para_type='UPS_CANCEL_FLAG' and ENABLED='Y'";
+            DataTable dt = new DataTable();
+            dt = ClientUtils.ExecuteSQL(sql).Tables[0];
+            return (dt.Rows.Count > 0);
+        }
     }
 }
